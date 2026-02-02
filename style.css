@@ -14,31 +14,32 @@
 
 /* Glowing text class */
 .glow {
-  color: #39ff14; /* text color */
+  color: #ffffff; /* text color */
   text-shadow:
-    0 0 5px #39ff14,
-    0 0 10px #39ff14,
-    0 0 20px #39ff14,
-    0 0 40px #39ff14;
+    0 0 5px #fff1d2,
+    0 0 10px #fff1d2,
+    0 0 20px #fff1d2,
+    0 0 40px #fff1d2;
   font-weight: bold;
 }
 
 /* Optional: pulsing glow animation */
 @keyframes pulseGlow {
   0%, 100% {
-    text-shadow: 0 0 5px #39ff14,
-                 0 0 10px #39ff14,
-                 0 0 20px #39ff14;
+    text-shadow: 0 0 5px #fff1d2,
+                 0 0 10px #fff1d2,
+                 0 0 20px #fff1d2;
   }
   50% {
-    text-shadow: 0 0 20px #39ff14,
-                 0 0 40px #39ff14,
-                 0 0 80px #39ff14;
+    text-shadow: 0 0 20px #fff1d2,
+                 0 0 40px #fff1d2,
+                 0 0 80px #fff1d2;
   }
 }
 
 .glow-pulse {
-  color: #39ff14;
+  color: #ffffff;
   font-weight: bold;
   animation: pulseGlow 2.0s infinite alternate;
 }
+
