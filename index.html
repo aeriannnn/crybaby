@@ -61,15 +61,17 @@ body::before{
   background-size:cover;
   background-position:center;
 
-  opacity:0.5;
+  opacity:0.55;
+
+  filter:blur(6px);
+
+  transform:scale(1.05);
 
   mix-blend-mode:screen;
 
   pointer-events:none;
 
   z-index:0;
-
-  backdrop-filter: blur(10px);
 
 }
 /* VIGNETTE OVERLAY (ADD RIGHT AFTER body::before) */
@@ -91,26 +93,6 @@ body::after{
   z-index:1;
 
 }
-
-    }
-
-    /* EXTRA MICRO-GRAIN LAYER */
-    body::after{
-
-      content:"";
-      position:fixed;
-      inset:0;
-
-      background-image:
-      radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
-
-      background-size:3px 3px;
-
-      opacity:0.10;
-
-      pointer-events:none;
-
-      z-index:1;
 
     }
 
