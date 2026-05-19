@@ -50,7 +50,6 @@
 
     }
 
-    /* DUST IMAGE OVERLAY (MAIN EFFECT) */
 body::before{
 
   content:"";
@@ -64,17 +63,14 @@ body::before{
   opacity:0.55;
 
   filter:blur(6px);
-
   transform:scale(1.05);
-
-  mix-blend-mode:screen;
 
   pointer-events:none;
 
   z-index:0;
 
 }
-/* VIGNETTE OVERLAY (ADD RIGHT AFTER body::before) */
+
 body::after{
 
   content:"";
@@ -195,12 +191,14 @@ body::after{
 
 }
 
-    .hero-content{
+.hero-content{
 
-      width:100%;
-      max-width:1000px;
+  width:100%;
+  max-width:1000px;
 
-    }
+  margin:0 auto;
+
+}
 
     .hero-sub{
 
