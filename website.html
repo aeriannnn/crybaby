@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Minimal Dark Template</title>
+
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+
+  <style>
+
+    /* RESET */
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    :root{
+      --bg:#070707;
+      --panel:#101010;
+      --border:#1d1d1d;
+      --text:#ededed;
+      --muted:#8a8a8a;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    /* BASE BACKGROUND (NO VIGNETTE) */
+    body{
+
+      background:#070707;
+
+      color:var(--text);
+
+      font-family:'Special Elite', monospace;
+
+      overflow-x:hidden;
+      position:relative;
+
+      letter-spacing:0.5px;
+
+    }
+
+    /* DUST IMAGE OVERLAY (MAIN EFFECT) */
+body::before{
+
+  content:"";
+  position:fixed;
+  inset:0;
+
+  background-image:url("background.jpg");
+  background-size:cover;
+  background-position:center;
+
+  opacity:0.5;
+
+  mix-blend-mode:screen;
+
+  pointer-events:none;
+
+  z-index:0;
+
+  backdrop-filter: blur(10px);
+
+}
+/* VIGNETTE OVERLAY (ADD RIGHT AFTER body::before) */
+body::after{
+
+  content:"";
+  position:fixed;
+  inset:0;
+
+  background:radial-gradient(
+    circle at center,
+    rgba(0,0,0,0) 40%,
+    rgba(0,0,0,0.35) 65%,
+    rgba(0,0,0,0.85) 100%
+  );
+
+  pointer-events:none;
+
+  z-index:1;
+
+}
+
+    }
+
+    /* EXTRA MICRO-GRAIN LAYER */
+    body::after{
+
+      content:"";
+      position:fixed;
+      inset:0;
+
+      background-image:
+      radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+
+      background-size:3px 3px;
+
+      opacity:0.10;
+
+      pointer-events:none;
+
+      z-index:1;
+
+    }
+
+    /* HEADER */
+    header{
+
+      width:100%;
+
+      padding-top:50px;
+
+      display:flex;
+      justify-content:center;
+      align-items:center;
+
+      position:relative;
+      z-index:2;
+
+    }
+
+    /* CENTER LOGO */
+    .logo{
+
+      font-family:'Cinzel', serif;
+
+      font-size:1.4rem;
+
+      font-style:italic;
+
+      font-weight:700;
+
+      letter-spacing:10px;
+
+      text-transform:uppercase;
+
+      color:#ffffff;
+
+      animation:logoGlow 2.2s ease-in-out infinite;
+
+      text-shadow:
+      0 0 8px rgba(255,255,255,0.25),
+      0 0 18px rgba(255,255,255,0.18),
+      0 0 35px rgba(255,255,255,0.10);
+
+    }
+
+    @keyframes logoGlow{
+
+      0%{
+        text-shadow:
+        0 0 6px rgba(255,255,255,0.10),
+        0 0 12px rgba(255,255,255,0.06),
+        0 0 24px rgba(255,255,255,0.03);
+      }
+
+      33%{
+        text-shadow:
+        0 0 22px rgba(255,255,255,0.35),
+        0 0 42px rgba(255,255,255,0.20),
+        0 0 75px rgba(255,255,255,0.10);
+      }
+
+      66%{
+        text-shadow:
+        0 0 18px rgba(255,255,255,0.28),
+        0 0 36px rgba(255,255,255,0.16),
+        0 0 65px rgba(255,255,255,0.08);
+      }
+
+      100%{
+        text-shadow:
+        0 0 6px rgba(255,255,255,0.10),
+        0 0 12px rgba(255,255,255,0.06),
+        0 0 24px rgba(255,255,255,0.03);
+      }
+
+    }
+
+    /* HERO */
+    .hero{
+
+      min-height:80vh;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      padding:0 8%;
+
+      text-align:center;
+
+      position:relative;
+      z-index:2;
+
+    }
+
+    .hero-content{
+
+      width:100%;
+      max-width:1000px;
+
+    }
+
+    .hero-sub{
+
+      color:var(--muted);
+
+      text-transform:uppercase;
+
+      letter-spacing:4px;
+
+      margin-bottom:25px;
+
+      font-size:0.8rem;
+
+    }
+
+    .hero h1{
+
+      font-family:'Cinzel', serif;
+
+      font-size:clamp(3rem, 8vw, 7rem);
+
+      line-height:0.95;
+
+      font-weight:800;
+
+      text-transform:uppercase;
+
+      margin-bottom:35px;
+
+      animation:titleGlow 5s ease-in-out infinite;
+
+    }
+
+    @keyframes titleGlow{
+
+      0%{ text-shadow:0 0 10px rgba(255,255,255,0.05); }
+      50%{ text-shadow:0 0 25px rgba(255,255,255,0.18); }
+      100%{ text-shadow:0 0 10px rgba(255,255,255,0.05); }
+
+    }
+
+    .hero p{
+
+      max-width:700px;
+
+      margin:auto;
+
+      color:var(--muted);
+
+      line-height:1.9;
+
+      font-size:1rem;
+
+    }
+
+    /* SECTION */
+    .section{
+
+      padding:120px 8%;
+
+      border-top:1px solid var(--border);
+
+      position:relative;
+      z-index:2;
+
+    }
+
+    .section-title{
+
+      font-family:'Cinzel', serif;
+
+      font-size:2.5rem;
+
+      margin-bottom:20px;
+
+      text-transform:uppercase;
+
+      letter-spacing:2px;
+
+    }
+
+    .section-text{
+
+      max-width:750px;
+
+      line-height:1.8;
+
+      color:var(--muted);
+
+    }
+
+    /* IMAGE GRID */
+    .gallery{
+
+      display:grid;
+
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+
+      gap:28px;
+
+      margin-top:60px;
+
+    }
+
+    /* IMAGE BOX */
+    .image-box{
+
+      height:380px;
+
+      background:
+      linear-gradient(145deg,
+        rgba(255,255,255,0.03),
+        rgba(255,255,255,0.01)
+      );
+
+      border:1px solid var(--border);
+
+      position:relative;
+
+      overflow:hidden;
+
+      cursor:pointer;
+
+      transition:0.45s ease;
+
+      display:flex;
+      justify-content:center;
+      align-items:center;
+
+      z-index:2;
+
+    }
+
+    .image-box:hover{
+
+      transform:scale(1.25);
+
+      z-index:20;
+
+      box-shadow:
+      0 25px 60px rgba(0,0,0,0.75),
+      0 0 40px rgba(255,255,255,0.06);
+
+    }
+
+    .image-box img{
+
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+
+    }
+
+    .image-label{
+
+      position:absolute;
+
+      bottom:24px;
+      left:24px;
+
+      color:rgba(255,255,255,0.45);
+
+      text-transform:uppercase;
+
+      letter-spacing:3px;
+
+      font-size:0.75rem;
+
+      z-index:2;
+
+    }
+
+    /* FOOTER */
+    footer{
+
+      border-top:1px solid var(--border);
+
+      padding:35px 8%;
+
+      color:var(--muted);
+
+      font-size:0.8rem;
+
+      letter-spacing:2px;
+
+      text-transform:uppercase;
+
+      position:relative;
+      z-index:2;
+
+    }
+
+    /* MOBILE */
+    @media(max-width:768px){
+
+      .hero{
+        min-height:70vh;
+      }
+
+      .section{
+        padding:90px 8%;
+      }
+
+      .image-box{
+        height:300px;
+      }
+
+      .image-box:hover{
+        transform:scale(1.08);
+      }
+
+    }
+
+  </style>
+
+</head>
+</html>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+
+    <!-- CENTER BRAND -->
+    <div class="logo">
+      SAVE A HAIRBRUSH
+    </div>
+
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <!-- SMALL SUBTITLE -->
+      <div class="hero-sub">
+        STAR OF THE HAIRBRUSH MINISTRIES
+      </div>
+
+      <!-- MAIN HEADER -->
+      <h1>
+        NOSTALGIC
+      </h1>
+
+      <!-- MAIN TEXT -->
+      <p>
+        World's greatest pedophile, acheivements: <i>matched hentai profile pictures with an 8 year old, fucked 99rebirth, fucked payhs, flexed his moms 2003 dodge durango</i>
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- CONTENT SECTION -->
+  <section class="section">
+
+    <h2 class="section-title">
+      Nostalgic's Crimes
+    </h2>
+
+    <p class="section-text">
+Here's Nostalgic (Sincere Cartwright) violating his mothers hairbrush without even cleaning his butt, along with him flirting with minors
+    </p>
+
+    <!-- IMAGE GRID -->
+    <div class="gallery">
+
+      <!-- IMAGE -->
+      <a href="bootycheeks.png" class="image-box">
+
+        <!-- IMAGE FILE -->
+        <img src="bootycheeks.png" alt="Image One">
+
+        <!-- IMAGE LABEL -->
+        <div class="image-label">
+          bootycheeks
+        </div>
+
+      </a>
+
+      <!-- IMAGE -->
+      <a href="NOSTALGIC_EXPOSED.webp" class="image-box">
+
+        <!-- IMAGE FILE -->
+        <img src="NOSTALGIC_EXPOSED.webp" alt="Image Two">
+
+        <!-- IMAGE LABEL -->
+        <div class="image-label">
+          NIGGER
+        </div>
+
+      </a>
+
+      <!-- IMAGE -->
+      <a href="pedophile.webp" class="image-box">
+
+        <!-- IMAGE FILE -->
+        <img src="pedophile.webp" alt="Image Three">
+
+        <!-- IMAGE LABEL -->
+        <div class="image-label">
+          diddyblud
+        </div>
+
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- SECOND SECTION -->
+  <section class="section">
+
+    <h2 class="section-title">
+      why are you even like this nigga who molested you when you were a kid
+    </h2>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    jah runs you loser you got popular because i made you a clown
+  </footer>
+
+</body>
+</html>
