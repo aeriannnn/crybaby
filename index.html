@@ -171,22 +171,29 @@ body::after{
     }
 
     /* HERO */
-    .hero{
+.hero h1{
 
-      min-height:80vh;
+  font-family:'Cinzel', serif;
 
-      display:flex;
-      align-items:center;
-      justify-content:center;
+  font-size:clamp(3rem, 8vw, 7rem);
+  line-height:0.95;
 
-      padding:0 8%;
+  font-weight:800;
+  text-transform:uppercase;
 
-      text-align:center;
+  margin-bottom:35px;
 
-      position:relative;
-      z-index:2;
+  animation:titleGlow 5s ease-in-out infinite;
 
-    }
+  /* STRONGER GLOW ONLY */
+  text-shadow:
+  0 0 15px rgba(255,255,255,0.25),
+  0 0 35px rgba(255,255,255,0.20),
+  0 0 70px rgba(255,255,255,0.15),
+  0 0 130px rgba(255,255,255,0.10),
+  0 0 220px rgba(255,255,255,0.06);
+
+}
 
     .hero-content{
 
