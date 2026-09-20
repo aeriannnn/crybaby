@@ -33,7 +33,7 @@
       font-size: 34px;
       letter-spacing: 2px;
       font-weight: 700;
-      margin: 0 0 32px;
+      margin: 0 0 8px;
     }
 
     .card-grid {
@@ -172,54 +172,65 @@
 
 
 
-    /* Flowing full-spectrum neon: each letter moves through the colour wheel. */
-    .rainbow-text, .person-name a { color: #ff477e; }
+    /* Flowing rainbow names: colour rotates smoothly through all hues. */
+    .page-title, .person-name a {
+      color: #41ffe1;
+    }
+
+    .person-name a {
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
     .wave-letter {
       display: inline-block;
       white-space: pre;
-      color: #ff477e;
-      text-shadow: 0 0 5px currentColor, 0 0 12px currentColor, 0 0 22px currentColor;
-      animation: neon-colour-wheel 7s ease-in-out infinite;
-      animation-delay: calc(var(--i) * -140ms);
+      color: #41ffe1;
+      text-shadow: 0 0 3px currentColor, 0 0 8px currentColor;
+      animation: neon-wave 6s linear infinite;
+      animation-delay: calc(var(--i) * -0.13s);
     }
-    /* Keep ordinary links neutral; headings and names carry the neon effect. */
-    .info-link .wave-letter {
-      animation: none;
-      color: #d7d7d7;
-      text-shadow: none;
+
+    @keyframes neon-wave {
+      from { filter: hue-rotate(0deg); }
+      to   { filter: hue-rotate(360deg); }
     }
-    .info-link:hover .wave-letter {
-      animation: neon-colour-wheel 7s ease-in-out infinite;
-      animation-delay: calc(var(--i) * -140ms);
-      text-shadow: 0 0 5px currentColor, 0 0 12px currentColor;
+
+    /* Credits sit neatly under the title rather than at the bottom. */
+    .site-meta {
+      margin: 0 0 30px;
+      text-align: center;
+      line-height: 1.7;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.6px;
+      color: #aeb2bc;
     }
-    @keyframes neon-colour-wheel {
-      0%, 100% { color: hsl(0 100% 65%); }
-      6.25%, 93.75% { color: hsl(45 100% 65%); }
-      12.5%, 87.5% { color: hsl(90 100% 65%); }
-      18.75%, 81.25% { color: hsl(135 100% 65%); }
-      25%, 75% { color: hsl(180 100% 65%); }
-      31.25%, 68.75% { color: hsl(225 100% 65%); }
-      37.5%, 62.5% { color: hsl(270 100% 70%); }
-      43.75%, 56.25% { color: hsl(315 100% 65%); }
-      50% { color: hsl(360 100% 65%); }
+
+    .site-meta p { margin: 0; }
+    .site-meta a {
+      color: #94e8df;
+      text-decoration: none;
+      border-bottom: 1px solid #3b746e;
+      transition: color .2s, border-color .2s;
     }
+    .site-meta a:hover {
+      color: #f3fffd;
+      border-color: currentColor;
+    }
+
+    .music-hint {
+      display: none;
+      margin: 8px 0 0;
+      color: #9da0ab;
+      font-size: 11px;
+      letter-spacing: 0;
+    }
+    .music-hint.visible { display: block; }
+
     @media (prefers-reduced-motion: reduce) {
       .wave-letter { animation: none; }
     }
-
-    .site-footer {
-      text-align: center;
-      margin-top: 28px;
-      padding: 22px 12px 0;
-      border-top: 1px solid #272727;
-      font-size: 14px;
-      line-height: 1.9;
-    }
-    .site-footer a { text-decoration: underline; }
-    .site-footer p { margin: 0; }
-
-
 
 
     /*
@@ -253,8 +264,13 @@
   <main class="page">
 
     <h1 class="page-title rainbow-text">HALL OF SHAME</h1>
+    <div class="site-meta">
+      <p>CREDITS: DEMETER, JAH, ARCHO</p>
+      <p><a href="https://t.me/m3ktopia" target="_blank" rel="noopener noreferrer">Contact @m3ktopia on Telegram</a></p>
+      <p id="music-hint" class="music-hint" aria-live="polite"></p>
+    </div>
 
-    <!-- Hidden background audio: autoplay may be blocked by a visitor's browser. -->
+    <!-- Keep music.mp3 next to index.html on GitHub Pages. No visible audio player. -->
     <audio id="background-music" src="music.mp3" autoplay loop preload="auto" hidden></audio>
 
     <section class="card-grid">
@@ -527,50 +543,74 @@
 
     </section>
 
-    <footer class="site-footer">
-      <p class="rainbow-text">CREDITS: DEMETER, JAH, ARCHO</p>
-      <p><a class="rainbow-text" href="https://t.me/m3ktopia" target="_blank" rel="noopener noreferrer">Contact @m3ktopia on Telegram</a></p>
-    </footer>
 
   </main>
 
 
   <script>
-    // Attempt playback on load. Browsers may block autoplay with sound until a visitor interacts.
+    // Browsers may prohibit autoplay with sound. If they do, any normal click
+    // or keypress on this page retries playback; no bulky player is displayed.
     const backgroundMusic = document.getElementById('background-music');
-    if (backgroundMusic) {
-      const tryPlayMusic = () => {
-        const result = backgroundMusic.play();
-        if (result && typeof result.then === 'function') {
-          result.then(() => {
-            document.removeEventListener('pointerdown', tryPlayMusic);
-            document.removeEventListener('keydown', tryPlayMusic);
-          }).catch(() => {});
-        }
-      };
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', tryPlayMusic, { once: true });
-      } else {
-        tryPlayMusic();
-      }
-      document.addEventListener('pointerdown', tryPlayMusic);
-      document.addEventListener('keydown', tryPlayMusic);
+    const musicHint = document.getElementById('music-hint');
+
+    function showMusicHint(message) {
+      musicHint.textContent = message;
+      musicHint.classList.add('visible');
     }
 
-    // Split decorative rainbow text into characters for the travelling colour wave.
-    document.querySelectorAll('.rainbow-text, .person-name a, .info-link').forEach(el => {
-      const original = el.textContent;
-      const text = original.trim();
+    function clearMusicHint() {
+      musicHint.textContent = '';
+      musicHint.classList.remove('visible');
+    }
+
+    function stopListeningForPlayback() {
+      document.removeEventListener('pointerdown', startMusic);
+      document.removeEventListener('keydown', startMusic);
+    }
+
+    async function startMusic() {
+      if (!backgroundMusic || !backgroundMusic.paused) return;
+      try {
+        await backgroundMusic.play();
+        clearMusicHint();
+        stopListeningForPlayback();
+      } catch (error) {
+        // A user gesture may be required; these listeners remain active.
+        if (error.name === 'NotAllowedError') {
+          showMusicHint('Click anywhere to enable background music.');
+        } else if (error.name !== 'AbortError') {
+          showMusicHint('Music unavailable: check that music.mp3 is uploaded next to index.html.');
+        }
+      }
+    }
+
+    if (backgroundMusic) {
+      backgroundMusic.volume = 0.55;
+      backgroundMusic.addEventListener('error', () => {
+        showMusicHint('Music unavailable: check that music.mp3 is uploaded next to index.html.');
+      });
+      document.addEventListener('pointerdown', startMusic);
+      document.addEventListener('keydown', startMusic);
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startMusic, { once: true });
+      } else {
+        startMusic();
+      }
+    }
+
+    // Apply the moving colour wave only to the heading and profile names.
+    document.querySelectorAll('.page-title, .person-name a').forEach(element => {
+      const text = element.textContent.trim();
       if (!text) return;
-      el.setAttribute('aria-label', text);
-      el.textContent = '';
-      Array.from(text).forEach((char, i) => {
+      element.setAttribute('aria-label', text);
+      element.textContent = '';
+      Array.from(text).forEach((character, i) => {
         const letter = document.createElement('span');
         letter.className = 'wave-letter';
         letter.style.setProperty('--i', i);
-        letter.textContent = char;
+        letter.textContent = character;
         letter.setAttribute('aria-hidden', 'true');
-        el.appendChild(letter);
+        element.appendChild(letter);
       });
     });
   </script>
