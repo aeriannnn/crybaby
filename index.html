@@ -162,7 +162,7 @@
     }
 
     .info-link:hover {
-      color: #00f5b0;
+      color: #ff4d8d;
     }
 
     .link-separator {
@@ -171,24 +171,25 @@
     }
 
 
-    /* Animated rainbow replaces the original neon-green accent text. */
-    .rainbow-text,
-    .person-name a,
-    .info-link:hover {
-      color: #00f5b0; /* fallback for browsers without background clipping */
-      background-image: linear-gradient(90deg,
-        #ff5c8a 0%, #ffb45e 16%, #f6f56a 33%,
-        #5dffbc 50%, #62b5ff 67%, #b785ff 83%, #ff5c8a 100%);
-      background-size: 250% 100%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: rainbow-shift 9s linear infinite;
-    }
 
-    @keyframes rainbow-shift {
-      0%   { background-position: 0% 50%; filter: hue-rotate(0deg); }
-      100% { background-position: 250% 50%; filter: hue-rotate(360deg); }
+    /* Each character travels through the colour wheel, staggered to make a wave. */
+    .rainbow-text, .person-name a { color: #ff4d8d; }
+    .wave-letter {
+      display: inline-block;
+      white-space: pre;
+      color: #ff4d8d;
+      animation: chromatic-wave 3.4s ease-in-out infinite alternate;
+      animation-delay: calc(var(--i) * -125ms);
+    }
+    /* Normal More Info links stay grey; only their hover state gains the wave. */
+    .info-link .wave-letter { color: #d7d7d7; animation: none; }
+    .info-link:hover .wave-letter { color: #ff4d8d; animation: chromatic-wave 3.4s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -125ms); }
+    @keyframes chromatic-wave {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .wave-letter { animation: none; }
     }
 
     .site-footer {
@@ -202,10 +203,23 @@
     .site-footer a { text-decoration: underline; }
     .site-footer p { margin: 0; }
 
-    @media (prefers-reduced-motion: reduce) {
-      .rainbow-text, .person-name a, .info-link:hover {
-        animation: none;
-      }
+
+
+
+    /* Background music on the home page only. */
+    .music-player {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: -16px auto 30px;
+      color: #d8d8d8;
+      font-size: 13px;
+    }
+    .music-player audio {
+      width: min(320px, 100%);
+      height: 38px;
     }
 
     /*
@@ -240,6 +254,14 @@
 
     <h1 class="page-title rainbow-text">HALL OF SHAME</h1>
 
+    <div class="music-player">
+      <span>♫ Background music</span>
+      <!-- Add your own music.mp3 next to index.html in your GitHub repository. -->
+      <audio src="music.mp3" controls autoplay loop preload="metadata" aria-label="Background music player">
+        Your browser does not support MP3 playback.
+      </audio>
+    </div>
+
     <section class="card-grid">
 
 
@@ -257,7 +279,7 @@
         <div class="person-content">
 
           <h2 class="person-name">
-            <a href="person1.html">nostalgic</a>
+            <a href="nostalgic.html">nostalgic</a>
           </h2>
 
           <div class="real-name">
@@ -279,7 +301,7 @@
             More information about this entry can continue here.
 
             <div class="info-links">
-              <a class="info-link" href="person1.html">More Info</a>
+              <a class="info-link" href="nostalgic.html">More Info</a>
             </div>
 
           </div>
@@ -304,7 +326,7 @@
         <div class="person-content">
 
           <h2 class="person-name">
-            <a href="person2.html">Gmot</a>
+            <a href="gmot.html">Gmot</a>
           </h2>
 
           <div class="real-name">
@@ -325,7 +347,7 @@
             You can also add multiple links below.
 
             <div class="info-links">
-              <a class="info-link" href="person2.html">More Info</a>
+              <a class="info-link" href="gmot.html">More Info</a>
             </div>
 
           </div>
@@ -350,7 +372,7 @@
         <div class="person-content">
 
           <h2 class="person-name">
-            <a href="person3.html">Atake /</a>
+            <a href="atake.html">Atake /</a>
           </h2>
 
           <div class="real-name">
@@ -367,7 +389,7 @@
             will automatically appear on the right.
 
             <div class="info-links">
-              <a class="info-link" href="person3.html">More Info</a>
+              <a class="info-link" href="atake.html">More Info</a>
             </div>
 
           </div>
@@ -392,7 +414,7 @@
         <div class="person-content">
 
           <h2 class="person-name">
-            <a href="person4.html">Mourn/Mournhill</a>
+            <a href="mourn-mournhill.html">Mourn/Mournhill</a>
           </h2>
 
           <div class="real-name">
@@ -412,7 +434,7 @@
             More text here.
 
             <div class="info-links">
-              <a class="info-link" href="person4.html">More Info</a>
+              <a class="info-link" href="mourn-mournhill.html">More Info</a>
             </div>
 
           </div>
@@ -437,7 +459,7 @@
         <div class="person-content">
 
           <h2 class="person-name">
-            <a href="person5.html">Korea/Death/1dpx</a>
+            <a href="korea-death-1dpx.html">Korea/Death/1dpx</a>
           </h2>
 
           <div class="real-name">
@@ -453,7 +475,7 @@
             The external links remain inside the scroll box.
 
             <div class="info-links">
-              <a class="info-link" href="person5.html">More Info</a>
+              <a class="info-link" href="korea-death-1dpx.html">More Info</a>
             </div>
 
           </div>
@@ -517,5 +539,24 @@
 
   </main>
 
+
+  <script>
+    // Split decorative rainbow text into characters for the travelling colour wave.
+    document.querySelectorAll('.rainbow-text, .person-name a, .info-link').forEach(el => {
+      const original = el.textContent;
+      const text = original.trim();
+      if (!text) return;
+      el.setAttribute('aria-label', text);
+      el.textContent = '';
+      Array.from(text).forEach((char, i) => {
+        const letter = document.createElement('span');
+        letter.className = 'wave-letter';
+        letter.style.setProperty('--i', i);
+        letter.textContent = char;
+        letter.setAttribute('aria-hidden', 'true');
+        el.appendChild(letter);
+      });
+    });
+  </script>
 </body>
 </html>
