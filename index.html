@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hall Page</title>
+  <title>Hall of Shame</title>
 
   <style>
     * {
@@ -101,7 +101,7 @@
     .real-name {
       text-align: center;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       margin-bottom: 6px;
       color: #d6d6d6;
     }
@@ -170,6 +170,44 @@
       margin: 0 3px;
     }
 
+
+    /* Animated rainbow replaces the original neon-green accent text. */
+    .rainbow-text,
+    .person-name a,
+    .info-link:hover {
+      color: #00f5b0; /* fallback for browsers without background clipping */
+      background-image: linear-gradient(90deg,
+        #ff5c8a 0%, #ffb45e 16%, #f6f56a 33%,
+        #5dffbc 50%, #62b5ff 67%, #b785ff 83%, #ff5c8a 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow-shift 9s linear infinite;
+    }
+
+    @keyframes rainbow-shift {
+      0%   { background-position: 0% 50%; filter: hue-rotate(0deg); }
+      100% { background-position: 250% 50%; filter: hue-rotate(360deg); }
+    }
+
+    .site-footer {
+      text-align: center;
+      margin-top: 28px;
+      padding: 22px 12px 0;
+      border-top: 1px solid #272727;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+    .site-footer a { text-decoration: underline; }
+    .site-footer p { margin: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rainbow-text, .person-name a, .info-link:hover {
+        animation: none;
+      }
+    }
+
     /*
       RESPONSIVE
     */
@@ -200,7 +238,7 @@
 
   <main class="page">
 
-    <h1 class="page-title">HALL OF FAME</h1>
+    <h1 class="page-title rainbow-text">HALL OF SHAME</h1>
 
     <section class="card-grid">
 
@@ -219,7 +257,7 @@
         <div class="person-content">
 
           <h2 class="person-name">
-            <a href="person1.html">More Info</a>
+            <a href="person1.html">nostalgic</a>
           </h2>
 
           <div class="real-name">
@@ -241,27 +279,7 @@
             More information about this entry can continue here.
 
             <div class="info-links">
-
-              <a
-                class="info-link"
-                href="person1.html"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                More Info
-              </a>
-
-              <span class="link-separator">|</span>
-
-              <a
-                class="info-link"
-                href="https://example.com/source"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Source
-              </a>
-
+              <a class="info-link" href="person1.html">More Info</a>
             </div>
 
           </div>
@@ -286,7 +304,7 @@
         <div class="person-content">
 
           <h2 class="person-name">
-            <a href="#">Person Two</a>
+            <a href="person2.html">Gmot</a>
           </h2>
 
           <div class="real-name">
@@ -307,27 +325,7 @@
             You can also add multiple links below.
 
             <div class="info-links">
-
-              <a
-                class="info-link"
-                href="https://example.com/person2"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                More Info
-              </a>
-
-              <span class="link-separator">|</span>
-
-              <a
-                class="info-link"
-                href="https://example.com/person2-source"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Source
-              </a>
-
+              <a class="info-link" href="person2.html">More Info</a>
             </div>
 
           </div>
@@ -352,7 +350,7 @@
         <div class="person-content">
 
           <h2 class="person-name">
-            <a href="#">Person Three</a>
+            <a href="person3.html">Atake /</a>
           </h2>
 
           <div class="real-name">
@@ -369,16 +367,7 @@
             will automatically appear on the right.
 
             <div class="info-links">
-
-              <a
-                class="info-link"
-                href="https://example.com/person3"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                More Info
-              </a>
-
+              <a class="info-link" href="person3.html">More Info</a>
             </div>
 
           </div>
@@ -403,7 +392,7 @@
         <div class="person-content">
 
           <h2 class="person-name">
-            <a href="#">Person Four</a>
+            <a href="person4.html">Mourn/Mournhill</a>
           </h2>
 
           <div class="real-name">
@@ -423,27 +412,7 @@
             More text here.
 
             <div class="info-links">
-
-              <a
-                class="info-link"
-                href="https://example.com/person4"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Archive
-              </a>
-
-              <span class="link-separator">|</span>
-
-              <a
-                class="info-link"
-                href="https://example.com/person4-source"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Source
-              </a>
-
+              <a class="info-link" href="person4.html">More Info</a>
             </div>
 
           </div>
@@ -468,7 +437,7 @@
         <div class="person-content">
 
           <h2 class="person-name">
-            <a href="#">Person Five</a>
+            <a href="person5.html">Korea/Death/1dpx</a>
           </h2>
 
           <div class="real-name">
@@ -484,38 +453,7 @@
             The external links remain inside the scroll box.
 
             <div class="info-links">
-
-              <a
-                class="info-link"
-                href="https://example.com/person5"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                More Info
-              </a>
-
-              <span class="link-separator">|</span>
-
-              <a
-                class="info-link"
-                href="https://example.com/person5-source1"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Source 1
-              </a>
-
-              <span class="link-separator">|</span>
-
-              <a
-                class="info-link"
-                href="https://example.com/person5-source2"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Source 2
-              </a>
-
+              <a class="info-link" href="person5.html">More Info</a>
             </div>
 
           </div>
@@ -540,7 +478,7 @@
         <div class="person-content">
 
           <h2 class="person-name">
-            <a href="#">Person Six</a>
+            <a href="person6.html">Person Six</a>
           </h2>
 
           <div class="real-name">
@@ -560,16 +498,7 @@
             More description text can go here.
 
             <div class="info-links">
-
-              <a
-                class="info-link"
-                href="https://example.com/person6"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                More Info
-              </a>
-
+              <a class="info-link" href="person6.html">More Info</a>
             </div>
 
           </div>
@@ -580,6 +509,11 @@
 
 
     </section>
+
+    <footer class="site-footer">
+      <p class="rainbow-text">CREDITS: DEMETER, JAH, ARCHO</p>
+      <p><a class="rainbow-text" href="https://t.me/m3ktopia" target="_blank" rel="noopener noreferrer">Contact @m3ktopia on Telegram</a></p>
+    </footer>
 
   </main>
 
