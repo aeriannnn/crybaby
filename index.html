@@ -257,7 +257,7 @@
     <div class="music-player">
       <span>♫ Background music</span>
       <!-- Add your own music.mp3 next to index.html in your GitHub repository. -->
-      <audio src="music.mp3" controls autoplay loop preload="metadata" aria-label="Background music player">
+      <audio src="music.mp3" controls autoplay loop preload="auto" aria-label="Background music player">
         Your browser does not support MP3 playback.
       </audio>
     </div>
@@ -541,6 +541,27 @@
 
 
   <script>
+    // Attempt playback on load. Browsers may block autoplay with sound until a visitor interacts.
+    const backgroundMusic = document.querySelector('.music-player audio');
+    if (backgroundMusic) {
+      const tryPlayMusic = () => {
+        const result = backgroundMusic.play();
+        if (result && typeof result.then === 'function') {
+          result.then(() => {
+            document.removeEventListener('pointerdown', tryPlayMusic);
+            document.removeEventListener('keydown', tryPlayMusic);
+          }).catch(() => {});
+        }
+      };
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', tryPlayMusic, { once: true });
+      } else {
+        tryPlayMusic();
+      }
+      document.addEventListener('pointerdown', tryPlayMusic);
+      document.addEventListener('keydown', tryPlayMusic);
+    }
+
     // Split decorative rainbow text into characters for the travelling colour wave.
     document.querySelectorAll('.rainbow-text, .person-name a, .info-link').forEach(el => {
       const original = el.textContent;
