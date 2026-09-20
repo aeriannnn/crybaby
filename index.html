@@ -287,6 +287,44 @@
     z-index: 1;
 
 }
+  /* CONTINUOUS NEON RAINBOW ANIMATION */
+
+@keyframes rainbowCycle {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+.page-title,
+.person-name a {
+    color: #ff004c !important;
+
+    text-shadow:
+        0 0 4px currentColor,
+        0 0 10px currentColor,
+        0 0 18px currentColor;
+
+    animation: rainbowCycle 4s linear infinite !important;
+}
+
+/* Keep the rainbow animation running when hovering */
+
+.person-name a:hover {
+    animation: rainbowCycle 4s linear infinite !important;
+}
+
+/* Disable the previous letter-by-letter animation */
+
+.page-title .wave-letter,
+.person-name .wave-letter {
+    animation: none !important;
+    color: inherit !important;
+    text-shadow: inherit;
+}
   </style>
 </head>
 
