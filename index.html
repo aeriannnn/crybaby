@@ -256,11 +256,42 @@
         grid-template-columns: 1fr;
       }
     }
+    /* FIREWORKS BACKGROUND */
+
+
+
+#fireworks {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    pointer-events: none;
+
+    z-index: 0;
+
+}
+
+
+
+.page {
+
+    position: relative;
+
+    z-index: 1;
+
+}
   </style>
 </head>
 
 <body>
-
+<canvas id="fireworks"></canvas>
   <main class="page">
 
     <h1 class="page-title rainbow-text">HALL OF SHAME</h1>
@@ -615,5 +646,107 @@
       });
     });
   </script>
+  <script>
+(() => {
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
+
+    let particles = [];
+    let rockets = [];
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+
+    function launchFirework() {
+        rockets.push({
+            x: Math.random() * canvas.width,
+            y: canvas.height,
+            targetY: Math.random() * canvas.height * 0.55 + 40,
+            speed: Math.random() * 3 + 5,
+            hue: Math.random() * 360
+        });
+    }
+
+    function explode(x, y, hue) {
+        const count = 70;
+
+        for (let i = 0; i < count; i++) {
+            const angle = (Math.PI * 2 * i) / count;
+            const speed = Math.random() * 3 + 1;
+
+            particles.push({
+                x,
+                y,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                life: 1,
+                decay: Math.random() * 0.008 + 0.009,
+                hue,
+                size: Math.random() * 2 + 1
+            });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        rockets.forEach((rocket, index) => {
+            rocket.y -= rocket.speed;
+
+            ctx.fillStyle = `hsl(${rocket.hue}, 100%, 70%)`;
+
+            ctx.beginPath();
+            ctx.arc(rocket.x, rocket.y, 2, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (rocket.y <= rocket.targetY) {
+                explode(rocket.x, rocket.y, rocket.hue);
+                rockets.splice(index, 1);
+            }
+        });
+
+        particles.forEach((p, index) => {
+            p.x += p.vx;
+            p.y += p.vy;
+
+            p.vy += 0.025;
+
+            p.vx *= 0.985;
+            p.vy *= 0.985;
+
+            p.life -= p.decay;
+
+            ctx.globalAlpha = Math.max(p.life, 0);
+
+            ctx.fillStyle = `hsl(${p.hue}, 100%, 65%)`;
+
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = ctx.fillStyle;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (p.life <= 0) {
+                particles.splice(index, 1);
+            }
+        });
+
+        ctx.globalAlpha = 1;
+        ctx.shadowBlur = 0;
+
+        requestAnimationFrame(animate);
+    }
+
+    setInterval(launchFirework, 1200);
+
+    animate();
+})();
+</script>
 </body>
 </html>
