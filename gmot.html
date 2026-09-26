@@ -6,11 +6,26 @@
   <title>Gmot | Hall of Shame</title>
   <style>
     * { box-sizing: border-box; }
-    body { margin: 0; background: #000; color: #d8d8d8; font: 16px/1.65 Arial, Helvetica, sans-serif; }
-    .page { width: min(900px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 70px; }
+
+    body {
+      margin: 0;
+      background: #000;
+      color: #d8d8d8;
+      font: 16px/1.65 Arial, Helvetica, sans-serif;
+    }
+
+    .page {
+      width: min(900px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 70px;
+    }
 
     /* Each character travels through the colour wheel, staggered to make a wave. */
-    .rainbow-text, .person-name a { color: #ff4d8d; }
+    .rainbow-text,
+    .person-name a {
+      color: #ff4d8d;
+    }
+
     .wave-letter {
       display: inline-block;
       white-space: pre;
@@ -18,51 +33,160 @@
       animation: chromatic-wave 3.4s ease-in-out infinite alternate;
       animation-delay: calc(var(--i) * -125ms);
     }
+
     /* Normal More Info links stay grey; only their hover state gains the wave. */
-    .info-link .wave-letter { color: #d7d7d7; animation: none; }
-    .info-link:hover .wave-letter { color: #ff4d8d; animation: chromatic-wave 3.4s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -125ms); }
+    .info-link .wave-letter {
+      color: #d7d7d7;
+      animation: none;
+    }
+
+    .info-link:hover .wave-letter {
+      color: #ff4d8d;
+      animation: chromatic-wave 3.4s ease-in-out infinite alternate;
+      animation-delay: calc(var(--i) * -125ms);
+    }
+
     @keyframes chromatic-wave {
       0% { filter: hue-rotate(0deg); }
       100% { filter: hue-rotate(360deg); }
     }
+
     @media (prefers-reduced-motion: reduce) {
       .wave-letter { animation: none; }
     }
 
-    a { color: #d8d8d8; }
-    a:hover { color: #fff; }
-    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.2; margin: 28px 0; }
-    .info { background: #0d0d0d; border: 1px solid #272727; padding: 24px; overflow-wrap: anywhere; }
-    .profile-photo { display: block; max-width: 100%; max-height: 300px; object-fit: contain; margin: 0 auto 24px; }
-    .info h2 { margin-top: 0; }
-    footer { text-align: center; font-size: 14px; border-top: 1px solid #272727; padding-top: 20px; margin-top: 32px; }
+    a {
+      color: #d8d8d8;
+    }
 
+    a:hover {
+      color: #fff;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.2;
+      margin: 28px 0;
+    }
+
+    .info {
+      background: #0d0d0d;
+      border: 1px solid #272727;
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    .profile-photo {
+      display: block;
+      max-width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      margin: 0 auto 24px;
+    }
+
+    .info h2 {
+      margin-top: 0;
+    }
+
+    /* Keeps the giant text/ASCII file formatted exactly as written. */
+    .gmot-file-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border-top: 1px solid #272727;
+      margin-top: 20px;
+      padding-top: 20px;
+    }
+
+    #gmot-file {
+      margin: 0;
+      min-width: max-content;
+      white-space: pre;
+      text-align: left;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      line-height: 1.05;
+      color: #fff;
+      background: #000;
+    }
+
+    .file-error {
+      white-space: normal !important;
+      min-width: 0 !important;
+      color: #ff8c8c !important;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 14px;
+      border-top: 1px solid #272727;
+      padding-top: 20px;
+      margin-top: 32px;
+    }
   </style>
 </head>
+
 <body>
   <main class="page">
     <a href="index.html">← Back to Hall of Shame</a>
+
     <h1 class="rainbow-text">Gmot</h1>
+
     <div class="info">
-      <img class="profile-photo" src="person2.png" alt="Gmot" onerror="this.style.display='none'">
+      <img
+        class="profile-photo"
+        src="person2.png"
+        alt="Gmot"
+        onerror="this.style.display='none'"
+      >
+
       <h2>More information</h2>
-      <p>               
-      <!-- Replace the paragraph above with your own text and links. -->
+
+      <div class="gmot-file-wrap">
+        <pre id="gmot-file">Loading...</pre>
+      </div>
     </div>
+
     <footer>
       <p class="rainbow-text">CREDITS: DEMETER, ARCHO</p>
-      <p><a class="rainbow-text" href="https://t.me/m3ktopia" target="_blank" rel="noopener noreferrer">Contact @m3ktopia on Telegram</a></p>
+      <p>
+        <a
+          class="rainbow-text"
+          href="https://t.me/m3ktopia"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Contact @m3ktopia on Telegram</a>
+      </p>
     </footer>
   </main>
 
   <script>
+    // Load the huge text file separately so spacing and ASCII art stay intact.
+    fetch("gmot.txt")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Could not load gmot.txt");
+        }
+        return response.text();
+      })
+      .then(text => {
+        document.getElementById("gmot-file").textContent = text;
+      })
+      .catch(() => {
+        const box = document.getElementById("gmot-file");
+        box.textContent = "Could not load gmot.txt. Make sure gmot.txt is uploaded in the same folder as gmot.html.";
+        box.classList.add("file-error");
+      });
+
     // Split decorative rainbow text into characters for the travelling colour wave.
     document.querySelectorAll('.rainbow-text, .person-name a, .info-link').forEach(el => {
       const original = el.textContent;
       const text = original.trim();
+
       if (!text) return;
+
       el.setAttribute('aria-label', text);
       el.textContent = '';
+
       Array.from(text).forEach((char, i) => {
         const letter = document.createElement('span');
         letter.className = 'wave-letter';
